@@ -7,8 +7,10 @@ import android.os.Handler
 import android.widget.Button
 import android.widget.TextView
 import com.google.android.material.textfield.TextInputEditText
+import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -30,9 +32,10 @@ class MainActivity : AppCompatActivity() {
                 username == "admin" && password == "admin"
             ){
 
-                val intent = Intent(this,MainActivity2::class.java)
+                val intent = Intent(this, MainActivity2::class.java)
                 startActivity(intent)
                 finish()
+                showToast("Welcome, $username")
 
             }
             else {
@@ -51,4 +54,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+    }
+
 }
