@@ -21,6 +21,8 @@ class MainActivity2 : AppCompatActivity() {
         var submitId = findViewById<Button>(R.id.answerSubmitId)
         var score = 0
         var totalProblems = 0
+        var additionCount = 0
+        var subtractionCount = 0
 
         generateButton.setOnClickListener {
 
@@ -30,8 +32,41 @@ class MainActivity2 : AppCompatActivity() {
             operandId.text = operand1.toString()
             var operand2 = (1..20).random()
             operand2Id.text = operand2.toString()
-            var operator = if (Random.nextInt(2)== 0) "+" else "-"
-            operatorId.text = operator
+            var operator = when {
+                additionCount < 5 && subtractionCount < 5 -> {
+                    if (Random.nextBoolean()) {
+                        additionCount++
+                        "+"
+                    } else {
+                        subtractionCount++
+                        "-"
+                    }
+                }
+                additionCount  == 5 && subtractionCount < 5 -> {
+                    subtractionCount++
+                    "-"
+                }
+                additionCount < 5 && subtractionCount == 5 -> {
+                    additionCount++
+                    "+"
+                }
+
+
+                else -> {
+                    additionCount = 0
+                    subtractionCount = 0
+                    if(Random.nextBoolean()){
+                        "+"
+                        additionCount++
+                    }
+                    else{
+                        "-"
+                        subtractionCount++
+                    }
+
+                }
+            }
+            operatorId.text = operator.toString()
             Toast.makeText(this, "$operator", Toast.LENGTH_LONG).show()
 
             totalProblems--
@@ -73,8 +108,41 @@ class MainActivity2 : AppCompatActivity() {
                 operandId.text = operand1.toString()
                 var operand2 = (1..20).random()
                 operand2Id.text = operand2.toString()
-                var operator = if (Random.nextBoolean()) "+" else "-"
-                operatorId.text = operator
+                var operator = when {
+                    additionCount < 5 && subtractionCount < 5 -> {
+                        if (Random.nextBoolean()) {
+                            additionCount++
+                            "+"
+                        } else {
+                            subtractionCount++
+                            "-"
+                        }
+                    }
+                    additionCount  == 5 && subtractionCount < 5 -> {
+                        subtractionCount++
+                        "-"
+                    }
+                    additionCount < 5 && subtractionCount == 5 -> {
+                        additionCount++
+                        "+"
+                    }
+
+
+                    else -> {
+                        additionCount = 0
+                        subtractionCount = 0
+                        if(Random.nextBoolean()){
+                            "+"
+                            additionCount++
+                        }
+                        else{
+                            "-"
+                            subtractionCount++
+                        }
+
+                    }
+                }
+                operatorId.text = operator.toString()
                 Toast.makeText(this, "$operator", Toast.LENGTH_LONG).show()
                 Toast.makeText(this, "$totalProblems", Toast.LENGTH_LONG).show()
 
