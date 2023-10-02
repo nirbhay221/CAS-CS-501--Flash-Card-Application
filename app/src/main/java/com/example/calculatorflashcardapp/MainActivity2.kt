@@ -5,149 +5,91 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.textfield.TextInputEditText
 import kotlin.random.Random
 
+import androidx.activity.viewModels
+
 class MainActivity2 : AppCompatActivity() {
+    private lateinit var generateButton : Button
+    private lateinit var operatorId : TextView
+    private lateinit var operandId : TextView
+    private lateinit var operand2Id : TextView
+    private lateinit var answerId : TextInputEditText
+    private lateinit var submitId : Button
+
+    private val flashViewModel by viewModels<FlashCardViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main2)
+        initializeViews()
+        flashViewModel.score = 0
+        flashViewModel.totalProblems = 0
+        flashViewModel.additionCount = 0
+        flashViewModel.subtractionCount = 0
 
-        var generateButton = findViewById<Button>(R.id.generateId)
-        var operandId = findViewById<TextView>(R.id.operandId)
-        var operand2Id = findViewById<TextView>(R.id.secondoperandId)
-        var operatorId= findViewById<TextView>(R.id.operatorId)
-        var answerId = findViewById<TextInputEditText>(R.id.answerId)
-        var submitId = findViewById<Button>(R.id.answerSubmitId)
-        var score = 0
-        var totalProblems = 0
-        var additionCount = 0
-        var subtractionCount = 0
 
+        operandId.text = ""
+        operand2Id.text = ""
+        operatorId.text = ""
+        setupGenerateButton()
+        setupSubmitButton()
+
+        operandId.text = flashViewModel.operand1.toString()
+        operand2Id.text = flashViewModel.operand2.toString()
+        operatorId.text = flashViewModel.operator.toString()
+
+    }
+    private fun initializeViews(){
+        generateButton = findViewById(R.id.generateId)
+        operandId = findViewById(R.id.operandId)
+        operand2Id = findViewById(R.id.secondoperandId)
+        operatorId= findViewById(R.id.operatorId)
+        answerId = findViewById(R.id.answerId)
+        submitId = findViewById(R.id.answerSubmitId)
+    }
+    private fun setupGenerateButton() {
         generateButton.setOnClickListener {
-
-
-            totalProblems = 10
-            var operand1 = (1..99).random()
-            operandId.text = operand1.toString()
-            var operand2 = (1..20).random()
-            operand2Id.text = operand2.toString()
-            var operator = when {
-                additionCount < 5 && subtractionCount < 5 -> {
-                    if (Random.nextBoolean()) {
-                        additionCount++
-                        "+"
-                    } else {
-                        subtractionCount++
-                        "-"
-                    }
-                }
-                additionCount  == 5 && subtractionCount < 5 -> {
-                    subtractionCount++
-                    "-"
-                }
-                additionCount < 5 && subtractionCount == 5 -> {
-                    additionCount++
-                    "+"
-                }
-
-
-                else -> {
-                    additionCount = 0
-                    subtractionCount = 0
-                    if(Random.nextBoolean()){
-                        "+"
-                        additionCount++
-                    }
-                    else{
-                        "-"
-                        subtractionCount++
-                    }
-
-                }
-            }
-            operatorId.text = operator.toString()
-            Toast.makeText(this, "$operator", Toast.LENGTH_LONG).show()
-
-            totalProblems--
-            generateButton?.visibility = Button.INVISIBLE
-
+            flashViewModel.generateProblems();
+            flashViewModel.generateFlashCard()
+            operandId.text = flashViewModel.operand1.toString()
+            operand2Id.text = flashViewModel.operand2.toString()
+            operatorId.text = flashViewModel.operator.toString()
+            generateButton.visibility = Button.INVISIBLE
         }
-
+    }
+    private fun setupSubmitButton() {
         submitId.setOnClickListener {
-
-
-
-            val operand1 = operandId.text.toString().toInt()
-            val operand2 = operand2Id.text.toString().toInt()
-            val operator = operatorId.text.toString()
-
-            val correctAnswer = if (operator == "+") operand1 + operand2 else operand1 - operand2
             val userAnswerText = answerId.text.toString()
+            val isCorrect = flashViewModel.processUserSubmission(userAnswerText)
 
             if (userAnswerText.isBlank()) {
                 Toast.makeText(this, "Enter a value for the result", Toast.LENGTH_LONG).show()
             } else {
-                val userAnswer = userAnswerText.toIntOrNull()
-                if (userAnswer != null && userAnswer == correctAnswer) {
-                    score++
+                if (isCorrect) {
+                    // Handle correct answer
+                } else {
+                    // Handle incorrect answer
+                }
+                Toast.makeText(this, "Total Problems : ${flashViewModel.totalProblems}", Toast.LENGTH_LONG).show()
+
+                if (flashViewModel.totalProblems >= 0) {
+                    flashViewModel.generateFlashCard()
+                    operandId.text = flashViewModel.operand1.toString()
+                    operand2Id.text = flashViewModel.operand2.toString()
+                    operatorId.text = flashViewModel.operator.toString()
                 }
             }
 
-            if (totalProblems == 0) {
+            if (flashViewModel.totalProblems < 0) {
                 operandId.text = ""
                 operand2Id.text = ""
                 operatorId.text = ""
-                Toast.makeText(this, "Score: ${score}", Toast.LENGTH_LONG).show()
-                score=0
-                generateButton?.visibility = Button.VISIBLE
-
-            }
-            if (totalProblems > 0) {
-                var operand1 = (1..99).random()
-                operandId.text = operand1.toString()
-                var operand2 = (1..20).random()
-                operand2Id.text = operand2.toString()
-                var operator = when {
-                    additionCount < 5 && subtractionCount < 5 -> {
-                        if (Random.nextBoolean()) {
-                            additionCount++
-                            "+"
-                        } else {
-                            subtractionCount++
-                            "-"
-                        }
-                    }
-                    additionCount  == 5 && subtractionCount < 5 -> {
-                        subtractionCount++
-                        "-"
-                    }
-                    additionCount < 5 && subtractionCount == 5 -> {
-                        additionCount++
-                        "+"
-                    }
-
-
-                    else -> {
-                        additionCount = 0
-                        subtractionCount = 0
-                        if(Random.nextBoolean()){
-                            "+"
-                            additionCount++
-                        }
-                        else{
-                            "-"
-                            subtractionCount++
-                        }
-
-                    }
-                }
-                operatorId.text = operator.toString()
-                Toast.makeText(this, "$operator", Toast.LENGTH_LONG).show()
-                Toast.makeText(this, "$totalProblems", Toast.LENGTH_LONG).show()
-
-                totalProblems--
-
+                Toast.makeText(this, "Score: ${flashViewModel.score}", Toast.LENGTH_LONG).show()
+                flashViewModel.score = 0
+                generateButton.visibility = Button.VISIBLE
             }
         }
     }
