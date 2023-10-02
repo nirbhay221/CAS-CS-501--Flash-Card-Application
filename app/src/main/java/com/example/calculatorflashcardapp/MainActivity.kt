@@ -7,6 +7,7 @@ import android.os.Handler
 import android.widget.Button
 import android.widget.TextView
 import com.google.android.material.textfield.TextInputEditText
+import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,6 +34,7 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(this,MainActivity2::class.java)
                 startActivity(intent)
                 finish()
+                showToast("Welcome, $username")
 
             }
             else {
@@ -50,5 +52,9 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 }
