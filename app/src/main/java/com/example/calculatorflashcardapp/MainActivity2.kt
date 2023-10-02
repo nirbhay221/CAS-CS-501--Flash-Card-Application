@@ -24,16 +24,18 @@ class MainActivity2 : AppCompatActivity() {
 
         generateButton.setOnClickListener {
 
+
             totalProblems = 10
             var operand1 = (1..99).random()
             operandId.text = operand1.toString()
             var operand2 = (1..20).random()
             operand2Id.text = operand2.toString()
-            var operator = if (Random.nextBoolean()) "+" else "-"
+            var operator = if (Random.nextInt(2)== 0) "+" else "-"
             operatorId.text = operator
             Toast.makeText(this, "$operator", Toast.LENGTH_LONG).show()
 
             totalProblems--
+            generateButton?.visibility = Button.INVISIBLE
 
         }
 
@@ -58,7 +60,13 @@ class MainActivity2 : AppCompatActivity() {
             }
 
             if (totalProblems == 0) {
+                operandId.text = ""
+                operand2Id.text = ""
+                operatorId.text = ""
                 Toast.makeText(this, "Score: ${score}", Toast.LENGTH_LONG).show()
+                score=0
+                generateButton?.visibility = Button.VISIBLE
+
             }
             if (totalProblems > 0) {
                 var operand1 = (1..99).random()
@@ -68,8 +76,10 @@ class MainActivity2 : AppCompatActivity() {
                 var operator = if (Random.nextBoolean()) "+" else "-"
                 operatorId.text = operator
                 Toast.makeText(this, "$operator", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "$totalProblems", Toast.LENGTH_LONG).show()
 
                 totalProblems--
+
             }
         }
     }
