@@ -3,4 +3,9 @@
     <string name="login">SUBMIT</string>
     <string name="password">Password</string>
     <string name="username">Username</string>
+    <string name="add">+</string>
+    <string name="subtract">-</string>
+    <string name="submit">Submit</string>
+    <string name="correct">Correct</string>
+    <string name="incorrect">Incorrect</string>
 </resources>
