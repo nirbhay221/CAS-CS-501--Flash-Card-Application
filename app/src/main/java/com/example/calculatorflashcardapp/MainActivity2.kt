@@ -113,6 +113,8 @@ class MainActivity2 : AppCompatActivity() {
                     // Handle incorrect answer
                 }
 
+                answerId.text?.clear()
+
                 if (flashViewModel.totalProblems >= 0) {
                     flashViewModel.generateFlashCard()
                     operandId.text = flashViewModel.operand1.toString()
