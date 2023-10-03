@@ -81,7 +81,6 @@ class MainActivity2 : AppCompatActivity() {
                 } else {
                     // Handle incorrect answer
                 }
-                Toast.makeText(this, "Total Problems : ${flashViewModel.totalProblems}", Toast.LENGTH_LONG).show()
 
                 if (flashViewModel.totalProblems >= 0) {
                     flashViewModel.generateFlashCard()
