@@ -19,6 +19,8 @@ class MainActivity2 : AppCompatActivity() {
     private lateinit var answerId : TextInputEditText
     private lateinit var submitId : Button
 
+    private var isGenerateButtonVisible = true
+
     private val flashViewModel by viewModels<FlashCardViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,6 +89,7 @@ class MainActivity2 : AppCompatActivity() {
                 operandId.text = ""
                 operand2Id.text = ""
                 operatorId.text = ""
+                Toast.makeText(this, "Score: ${flashViewModel.score}", Toast.LENGTH_LONG).show()
                 Toast.makeText(this, "Score: ${flashViewModel.score}", Toast.LENGTH_LONG).show()
                 flashViewModel.score = 0
                 generateButton.visibility = Button.VISIBLE
