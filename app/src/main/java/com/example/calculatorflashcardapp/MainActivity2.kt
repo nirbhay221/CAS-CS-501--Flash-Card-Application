@@ -1,5 +1,6 @@
 package com.example.calculatorflashcardapp
 
+import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -47,6 +48,21 @@ class MainActivity2 : AppCompatActivity() {
         if (!flashViewModel.isGenerateButtonVisible) {
             generateButton.visibility = Button.INVISIBLE
         }
+
+    }
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            setContentView(R.layout.activity_main2_landscape)
+
+            Toast.makeText(this,"changed to landscape",Toast.LENGTH_LONG)
+        } else {
+            setContentView(R.layout.activity_main2)
+            Toast.makeText(this,"changed to portrait",Toast.LENGTH_LONG)
+        }
+
+
 
     }
     private fun initializeViews(){
