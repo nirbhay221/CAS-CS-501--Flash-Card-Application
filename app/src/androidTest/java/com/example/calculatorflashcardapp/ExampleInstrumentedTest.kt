@@ -56,8 +56,6 @@ class ExampleInstrumentedTest {
         Espresso.onView(withId(R.id.generateId))
             .check(ViewAssertions.matches(ViewMatchers.withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)))
 
-
-
     }
 
     @Test
@@ -71,12 +69,9 @@ class ExampleInstrumentedTest {
         Espresso.onView(withId(R.id.generateId))
             .check(ViewAssertions.matches(ViewMatchers.withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE)))
 
-
-
-
-
-
     }
+
+
 
 
 

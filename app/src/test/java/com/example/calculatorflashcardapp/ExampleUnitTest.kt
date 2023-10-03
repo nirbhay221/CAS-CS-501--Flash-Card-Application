@@ -50,6 +50,32 @@ class ExampleUnitTest {
         assertEquals(0, viewModel.score)
     }
 
+    @Test
+    fun testProcessUserSubmissionNull() {
+        viewModel.operand1 = 11
+        viewModel.operand2 = 6
+        viewModel.operator = "-"
+
+        val isCorrect = viewModel.processUserSubmission("")
+
+        assertFalse(isCorrect)
+        assertEquals(0, viewModel.score)
+    }
+
+    @Test
+    fun testProcessUserSubmissionScoreUpdate() {
+        viewModel.operand1 = 21
+        viewModel.operand2 = 7
+        viewModel.operator = "+"
+        viewModel.score = 9
+
+        val isCorrect = viewModel.processUserSubmission("28")
+
+        assertTrue(isCorrect)
+        assertEquals(10, viewModel.score)
+    }
+
+
 
 
 }
