@@ -97,16 +97,23 @@ class MainActivity2 : AppCompatActivity() {
     private fun setupSubmitButton() {
         submitId.setOnClickListener {
             val userAnswerText = answerId.text.toString()
-            val isCorrect = flashViewModel.processUserSubmission(userAnswerText)
 
-            if (userAnswerText.isBlank()) {
+            if (flashViewModel.isGenerateButtonVisible) {
+                // The "Generate" button was not clicked first
+                Toast.makeText(this, "Please click Generate first", Toast.LENGTH_LONG).show()
+            } else if (userAnswerText.isBlank()) {
+                // No answer entered
                 Toast.makeText(this, "Enter a value for the result", Toast.LENGTH_LONG).show()
             } else {
+                val isCorrect = flashViewModel.processUserSubmission(userAnswerText)
+
                 if (isCorrect) {
                     // Handle correct answer
                 } else {
                     // Handle incorrect answer
                 }
+
+                answerId.text?.clear()
 
                 if (flashViewModel.totalProblems >= 0) {
                     flashViewModel.generateFlashCard()
@@ -114,19 +121,19 @@ class MainActivity2 : AppCompatActivity() {
                     operand2Id.text = flashViewModel.operand2.toString()
                     operatorId.text = flashViewModel.operator.toString()
                 }
-            }
 
-            if (flashViewModel.totalProblems < 0) {
-                operandId.text = ""
-                operand2Id.text = ""
-                operatorId.text = ""
-                Toast.makeText(this, "Score: ${flashViewModel.score}", Toast.LENGTH_LONG).show()
-                Toast.makeText(this, "Score: ${flashViewModel.score}", Toast.LENGTH_LONG).show()
-                flashViewModel.score = 0
-                flashViewModel.isGenerateButtonVisible=true
-                generateButton.visibility = Button.VISIBLE
+                if (flashViewModel.totalProblems < 0) {
+                    operandId.text = ""
+                    operand2Id.text = ""
+                    operatorId.text = ""
+                    Toast.makeText(this, "Score: ${flashViewModel.score}", Toast.LENGTH_LONG).show()
+                    flashViewModel.score = 0
+                    flashViewModel.isGenerateButtonVisible = true
+                    generateButton.visibility = Button.VISIBLE
+                }
             }
         }
     }
+
 
 }

@@ -20,8 +20,8 @@ const val CURRENT_SUBTRACTIONCOUNT_KEY = "CURRENT_SUBTRACTIONCOUNT_KEY"
 const val CURRENT_TOTALPROBLEMS_KEY = "CURRENT_TOTALPROBLEMS_KEY"
 class FlashCardViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel() {
     var score: Int
-    get() = savedStateHandle.get(CURRENT_SCORE_KEY) ?: 0
-    set(value) = savedStateHandle.set(CURRENT_SCORE_KEY, value)
+        get() = savedStateHandle.get(CURRENT_SCORE_KEY) ?: 0
+        set(value) = savedStateHandle.set(CURRENT_SCORE_KEY, value)
     var isGenerateButtonVisible: Boolean
         get() = savedStateHandle.get(CURRENT_GENERATE_BUTTON_VISIBLE_KEY) ?: true
         set(value) = savedStateHandle.set(CURRENT_GENERATE_BUTTON_VISIBLE_KEY, value)

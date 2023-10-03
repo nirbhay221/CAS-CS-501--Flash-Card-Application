@@ -1,5 +1,6 @@
 package com.example.calculatorflashcardapp
 
+import android.content.pm.ActivityInfo
 import androidx.lifecycle.SavedStateHandle
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso
@@ -7,7 +8,6 @@ import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions
 
 import androidx.test.core.app.ActivityScenario.launch
-import androidx.test.espresso.matcher.RootMatchers
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -17,7 +17,6 @@ import org.junit.runner.RunWith
 
 import org.junit.Assert.*
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -48,19 +47,37 @@ class ExampleInstrumentedTest {
 
         Espresso.onView(withId(R.id.generateId)).perform(ViewActions.click())
         var answer = 0
-        for (i in 1..10){
-        Espresso.onView(withId(R.id.answerId))
-            .perform(ViewActions.typeText("0"))
-            .perform(ViewActions.closeSoftKeyboard())
+        for (i in 1..10) {
+            Espresso.onView(withId(R.id.answerId))
+                .perform(ViewActions.typeText("0"))
+                .perform(ViewActions.closeSoftKeyboard())
+            Espresso.onView(withId(R.id.answerSubmitId)).perform(ViewActions.click())
+        }
+        Espresso.onView(withId(R.id.generateId))
+            .check(ViewAssertions.matches(ViewMatchers.withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)))
 
-        Espresso.onView(withId(R.id.answerSubmitId)).perform(ViewActions.click())}
 
 
-        Espresso.onView(withText("Score: 0"))
-            .inRoot(RootMatchers.isPlatformPopup())
-            .check(ViewAssertions.matches(withText("Score: 0")))
-
-        scenario.close()
     }
+
+    @Test
+    fun anotherTest2() {
+        scenario = launch(MainActivity::class.java)
+
+        Espresso.onView(withId(R.id.usernameId)).perform(ViewActions.typeText("admin"))
+        Espresso.onView(withId(R.id.passwordId)).perform(ViewActions.typeText("admin"))
+        Espresso.onView(withId(R.id.buttonId)).perform(ViewActions.click())
+        Espresso.onView(withId(R.id.generateId)).perform(ViewActions.click())
+        Espresso.onView(withId(R.id.generateId))
+            .check(ViewAssertions.matches(ViewMatchers.withEffectiveVisibility(ViewMatchers.Visibility.INVISIBLE)))
+
+
+
+
+
+
+    }
+
+
 
 }
