@@ -61,9 +61,19 @@ class MainActivity2 : AppCompatActivity() {
             setContentView(R.layout.activity_main2)
             Toast.makeText(this,"changed to portrait",Toast.LENGTH_LONG)
         }
+        initializeViews()
+        setupGenerateButton()
+        setupSubmitButton()
 
+        // Update the UI elements with ViewModel data
+        operandId.text = flashViewModel.operand1.toString()
+        operand2Id.text = flashViewModel.operand2.toString()
+        operatorId.text = flashViewModel.operator.toString()
 
-
+        // Check if the generate button should be hidden
+        if (!flashViewModel.isGenerateButtonVisible) {
+            generateButton.visibility = Button.INVISIBLE
+        }
     }
     private fun initializeViews(){
         generateButton = findViewById(R.id.generateId)
