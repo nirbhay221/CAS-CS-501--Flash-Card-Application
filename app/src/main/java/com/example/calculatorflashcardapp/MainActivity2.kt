@@ -19,8 +19,6 @@ class MainActivity2 : AppCompatActivity() {
     private lateinit var answerId : TextInputEditText
     private lateinit var submitId : Button
 
-    private var isGenerateButtonVisible = true
-
     private val flashViewModel by viewModels<FlashCardViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +40,10 @@ class MainActivity2 : AppCompatActivity() {
         operandId.text = flashViewModel.operand1.toString()
         operand2Id.text = flashViewModel.operand2.toString()
         operatorId.text = flashViewModel.operator.toString()
+        if (!flashViewModel.isGenerateButtonVisible) {
+            generateButton.visibility = Button.INVISIBLE
+        }
+
 
     }
     private fun initializeViews(){
@@ -59,7 +61,8 @@ class MainActivity2 : AppCompatActivity() {
             operandId.text = flashViewModel.operand1.toString()
             operand2Id.text = flashViewModel.operand2.toString()
             operatorId.text = flashViewModel.operator.toString()
-            generateButton.visibility = Button.INVISIBLE
+
+            flashViewModel.isGenerateButtonVisible = false
         }
     }
     private fun setupSubmitButton() {
@@ -92,7 +95,8 @@ class MainActivity2 : AppCompatActivity() {
                 Toast.makeText(this, "Score: ${flashViewModel.score}", Toast.LENGTH_LONG).show()
                 Toast.makeText(this, "Score: ${flashViewModel.score}", Toast.LENGTH_LONG).show()
                 flashViewModel.score = 0
-                generateButton.visibility = Button.VISIBLE
+
+                flashViewModel.isGenerateButtonVisible = true
             }
         }
     }
