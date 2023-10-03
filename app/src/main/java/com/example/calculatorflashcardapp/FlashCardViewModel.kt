@@ -1,6 +1,5 @@
 package com.example.calculatorflashcardapp
 
-import android.widget.Button
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import kotlin.random.Random
@@ -20,6 +19,9 @@ const val CURRENT_SUBTRACTIONCOUNT_KEY = "CURRENT_SUBTRACTIONCOUNT_KEY"
 
 const val CURRENT_TOTALPROBLEMS_KEY = "CURRENT_TOTALPROBLEMS_KEY"
 class FlashCardViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel() {
+    var score: Int
+    get() = savedStateHandle.get(CURRENT_SCORE_KEY) ?: 0
+    set(value) = savedStateHandle.set(CURRENT_SCORE_KEY, value)
     var isGenerateButtonVisible: Boolean
         get() = savedStateHandle.get(CURRENT_GENERATE_BUTTON_VISIBLE_KEY) ?: true
         set(value) = savedStateHandle.set(CURRENT_GENERATE_BUTTON_VISIBLE_KEY, value)
@@ -27,10 +29,6 @@ class FlashCardViewModel(private val savedStateHandle: SavedStateHandle) : ViewM
     companion object {
         private const val CURRENT_GENERATE_BUTTON_VISIBLE_KEY = "CURRENT_GENERATE_BUTTON_VISIBLE_KEY"
     }
-    var score: Int
-    get() = savedStateHandle.get(CURRENT_SCORE_KEY) ?: 0
-    set(value) = savedStateHandle.set(CURRENT_SCORE_KEY, value)
-
     var operand1: Int
         get() = savedStateHandle.get(CURRENT_OPERAND1_KEY) ?: 0
         set(value) = savedStateHandle.set(CURRENT_OPERAND1_KEY, value)
@@ -59,12 +57,10 @@ class FlashCardViewModel(private val savedStateHandle: SavedStateHandle) : ViewM
         get() = savedStateHandle.get(CURRENT_TOTALPROBLEMS_KEY) ?: 0
         set(value) = savedStateHandle.set(CURRENT_TOTALPROBLEMS_KEY, value)
 
-
     fun generateProblems(){
         this.totalProblems= 10;
     }
     fun generateFlashCard() {
-
         operand1 = (1..99).random()
         operand2 = (1..20).random()
         operator = when {

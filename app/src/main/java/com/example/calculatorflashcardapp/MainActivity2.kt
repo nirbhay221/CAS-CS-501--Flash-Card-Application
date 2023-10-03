@@ -25,6 +25,8 @@ class MainActivity2 : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main2)
         initializeViews()
+        val previousTotalProblems = flashViewModel.totalProblems
+        val previousScore = flashViewModel.score
         flashViewModel.score = 0
         flashViewModel.totalProblems = 0
         flashViewModel.additionCount = 0
@@ -40,10 +42,11 @@ class MainActivity2 : AppCompatActivity() {
         operandId.text = flashViewModel.operand1.toString()
         operand2Id.text = flashViewModel.operand2.toString()
         operatorId.text = flashViewModel.operator.toString()
+        flashViewModel.totalProblems = previousTotalProblems
+        flashViewModel.score = previousScore
         if (!flashViewModel.isGenerateButtonVisible) {
             generateButton.visibility = Button.INVISIBLE
         }
-
 
     }
     private fun initializeViews(){
@@ -61,7 +64,7 @@ class MainActivity2 : AppCompatActivity() {
             operandId.text = flashViewModel.operand1.toString()
             operand2Id.text = flashViewModel.operand2.toString()
             operatorId.text = flashViewModel.operator.toString()
-
+            generateButton.visibility = Button.INVISIBLE
             flashViewModel.isGenerateButtonVisible = false
         }
     }
@@ -95,8 +98,8 @@ class MainActivity2 : AppCompatActivity() {
                 Toast.makeText(this, "Score: ${flashViewModel.score}", Toast.LENGTH_LONG).show()
                 Toast.makeText(this, "Score: ${flashViewModel.score}", Toast.LENGTH_LONG).show()
                 flashViewModel.score = 0
-
-                flashViewModel.isGenerateButtonVisible = true
+                flashViewModel.isGenerateButtonVisible=true
+                generateButton.visibility = Button.VISIBLE
             }
         }
     }
